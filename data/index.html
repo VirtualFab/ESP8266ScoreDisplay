@@ -1,0 +1,412 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="http://www.cssscript.com/wp-includes/css/sticky.css" rel="stylesheet" type="text/css">
+<title>Score Display</title>
+<style class="cp-pen-styles">
+* {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+html, body { height: 100%; }
+
+body {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  background-color: #EDF1F6;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-overflow-scrolling: touch;
+  text-rendering: optimizelegibility;
+}
+
+.ctrl {
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 auto;
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-bottom: 1px solid #D5DCE6;
+  background-color: #fff;
+  border-radius: 5px;
+  font-size: 30px;
+}
+
+.ctrl__counter {
+  position: relative;
+  width: 200px;
+  height: 100px;
+  color: #333C48;
+  text-align: center;
+  overflow: hidden;
+}
+
+.ctrl__counter.is-input .ctrl__counter-num {
+  visability: hidden;
+  opacity: 0;
+  -webkit-transition: opacity 100ms ease-in;
+  transition: opacity 100ms ease-in;
+}
+
+.ctrl__counter.is-input .ctrl__counter-input {
+  visability: visible;
+  opacity: 1;
+  -webkit-transition: opacity 100ms ease-in;
+  transition: opacity 100ms ease-in;
+}
+
+.ctrl__counter-input {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  z-index: 2;
+  box-shadow: none;
+  outline: none;
+  border: none;
+  color: #333C48;
+  font-size: 30px;
+  line-height: 100px;
+  text-align: center;
+  visability: hidden;
+  opacity: 0;
+  -webkit-transition: opacity 100ms ease-in;
+  transition: opacity 100ms ease-in;
+}
+
+.ctrl__counter-num {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  line-height: 100px;
+  visability: visible;
+  opacity: 1;
+  -webkit-transition: opacity 100ms ease-in;
+  transition: opacity 100ms ease-in;
+}
+
+.ctrl__counter-num.is-increment-hide {
+  opacity: 0;
+  -webkit-transform: translateY(-50px);
+  transform: translateY(-50px);
+  -webkit-animation: increment-prev 100ms ease-in;
+  animation: increment-prev 100ms ease-in;
+}
+
+.ctrl__counter-num.is-increment-visible {
+  opacity: 1;
+  -webkit-transform: translateY(0);
+  transform: translateY(0);
+  -webkit-animation: increment-next 100ms ease-out;
+  animation: increment-next 100ms ease-out;
+}
+
+.ctrl__counter-num.is-decrement-hide {
+  opacity: 0;
+  -webkit-transform: translateY(50px);
+  transform: translateY(50px);
+  -webkit-animation: decrement-prev 100ms ease-in;
+  animation: decrement-prev 100ms ease-in;
+}
+
+.ctrl__counter-num.is-decrement-visible {
+  opacity: 1;
+  -webkit-transform: translateY(0);
+  transform: translateY(0);
+  -webkit-animation: decrement-next 100ms ease-out;
+  animation: decrement-next 100ms ease-out;
+}
+
+.ctrl__button {
+  width: 100px;
+  line-height: 100px;
+  text-align: center;
+  color: #fff;
+  cursor: pointer;
+  background-color: #8498a7;
+  -webkit-transition: background-color 100ms ease-in;
+  transition: background-color 100ms ease-in;
+}
+
+.ctrl__button:hover {
+  background-color: #90a2b0;
+  -webkit-transition: background-color 100ms ease-in;
+  transition: background-color 100ms ease-in;
+}
+
+.ctrl__button:active {
+  background-color: #778996;
+  -webkit-transition: background-color 100ms ease-in;
+  transition: background-color 100ms ease-in;
+}
+
+.ctrl__button--decrement { border-radius: 5px 0 0 5px; }
+
+.ctrl__button--increment { border-radius: 0 5px 5px 0; }
+ @-webkit-keyframes 
+decrement-prev {  from {
+ opacity: 1;
+ -webkit-transform: translateY(0);
+ transform: translateY(0);
+}
+}
+ @keyframes 
+decrement-prev {  from {
+ opacity: 1;
+ -webkit-transform: translateY(0);
+ transform: translateY(0);
+}
+}
+@-webkit-keyframes 
+decrement-next {  from {
+ opacity: 0;
+ -webkit-transform: translateY(-50px);
+ transform: translateY(-50px);
+}
+}
+@keyframes 
+decrement-next {  from {
+ opacity: 0;
+ -webkit-transform: translateY(-50px);
+ transform: translateY(-50px);
+}
+}
+@-webkit-keyframes 
+increment-prev {  from {
+ opacity: 1;
+ -webkit-transform: translateY(0);
+ transform: translateY(0);
+}
+}
+@keyframes 
+increment-prev {  from {
+ opacity: 1;
+ -webkit-transform: translateY(0);
+ transform: translateY(0);
+}
+}
+@-webkit-keyframes 
+increment-next {  from {
+ opacity: 0;
+ -webkit-transform: translateY(50px);
+ transform: translateY(50px);
+}
+}
+@keyframes 
+increment-next {  from {
+ opacity: 0;
+ -webkit-transform: translateY(50px);
+ transform: translateY(50px);
+}
+}
+</style>
+<style>body{background-color:#ccc;font-family:Arial,Helvetica,Sans-Serif;Color:#008}</style>
+</head>
+
+<body>
+<!--<div id="css-script-menu">
+  <div class="css-script-center">
+    <ul>
+      <li><a href="http://www.cssscript.com/animated-input-spinner-pure-javascript-csscss3/">Download</a></li>
+      <li><a href="http://www.cssscript.com/">Back To CSS Script</a></li>
+    </ul>
+    <div class="css-script-ads">
+    <script type="text/javascript">
+
+google_ad_client = "ca-pub-2783044520727903";
+/* CSSScript Demo Page */
+google_ad_slot = "3025259193";
+google_ad_width = 728;
+google_ad_height = 90;
+
+</script>
+      <script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+    <div class="css-script-clear"></div>
+  </div>
+
+</div>
+//-->
+
+<div class="css-script-center">
+<h1>Score Display</h1>
+<form id="theForm" action=""method="post">
+<input i value="" + String(Score[0]) + "" min="0" max="99" type="number" onclick="document.getElementById('theForm').submit();"><br>
+<label for="Score2">Score2:</label><input id="Score2" name="Score2" value="" + String(Score[1]) + "" min="0" max="99" type="number"><br>
+<label for="color">Color:</label><input id="color" name="color" value="" + color + ""><br>
+<label for="brightness">Brightness:</label><input id="brightness" name="brightness" value="" + String(brightness) + "" min="0" max="255" type="number"><br>
+<label for="speed">Speed:</label><input id="speed" name="speed" value="" + String(intSpeed) + "" min="1" max="255" type="number"><br>
+<input type="submit" value="Save">
+<table class='ctrl' border=0><tr><td align="center">
+	Score1
+	</td>
+	<td align="center">
+	Score2
+	</td>
+</tr>
+<tr>
+	<td>
+<div class='ctrl'>
+  <div class='ctrl__button ctrl__button--decrement'>&ndash;</div>
+  <div class='ctrl__counter'>
+    <input id="Score1" name="Score1" class='ctrl__counter-input' maxlength='10' type='text' value='0'>
+    <div class='ctrl__counter-num'>0</div>
+  </div>
+  <div class='ctrl__button ctrl__button--increment'>+</div>
+</div>
+</td><td>
+<div class='ctrl'>
+  <div class='ctrl__button ctrl__button--decrement'>&ndash;</div>
+  <div class='ctrl__counter'>
+    <input id="Score2" name="Score2" class='ctrl__counter-input' maxlength='10' type='text' value='0'>
+    <div class='ctrl__counter-num'>0</div>
+  </div>
+  <div class='ctrl__button ctrl__button--increment'>+</div>
+</div>
+</td></tr></table>  	  
+</div>  
+
+
+<script>
+(function() {
+  'use strict';
+
+  function ctrls() {
+    var _this = this;
+
+    this.counter = 0;
+    this.els = {
+      decrement: document.querySelector('.ctrl__button--decrement'),
+      counter: {
+        container: document.querySelector('.ctrl__counter'),
+        num: document.querySelector('.ctrl__counter-num'),
+        input: document.querySelector('.ctrl__counter-input')
+      },
+      increment: document.querySelector('.ctrl__button--increment')
+    };
+
+    this.decrement = function() {
+      var counter = _this.getCounter();
+      var nextCounter = (_this.counter > 0) ? --counter : counter;
+      _this.setCounter(nextCounter);
+    };
+
+    this.increment = function() {
+      var counter = _this.getCounter();
+      var nextCounter = (counter < 9999999999) ? ++counter : counter;
+      _this.setCounter(nextCounter);
+    };
+
+    this.getCounter = function() {
+      return _this.counter;
+    };
+
+    this.setCounter = function(nextCounter) {
+      _this.counter = nextCounter;
+    };
+
+    this.debounce = function(callback) {
+      setTimeout(callback, 100);
+    };
+
+    this.render = function(hideClassName, visibleClassName) {
+      _this.els.counter.num.classList.add(hideClassName);
+
+      setTimeout(function() {
+        _this.els.counter.num.innerText = _this.getCounter();
+        _this.els.counter.input.value = _this.getCounter();
+        _this.els.counter.num.classList.add(visibleClassName);
+      }, 100);
+
+      setTimeout(function() {
+        _this.els.counter.num.classList.remove(hideClassName);
+        _this.els.counter.num.classList.remove(visibleClassName);
+      }, 200);
+    };
+
+    this.ready = function() {
+      _this.els.decrement.addEventListener('click', function() {
+        _this.debounce(function() {
+          _this.decrement();
+          _this.render('is-decrement-hide', 'is-decrement-visible');
+        });
+      });
+
+      _this.els.increment.addEventListener('click', function() {
+        _this.debounce(function() {
+          _this.increment();
+          _this.render('is-increment-hide', 'is-increment-visible');
+        });
+      });
+
+      _this.els.counter.input.addEventListener('input', function(e) {
+        var parseValue = parseInt(e.target.value);
+        if (!isNaN(parseValue) && parseValue >= 0) {
+          _this.setCounter(parseValue);
+          _this.render();
+        }
+      });
+
+      _this.els.counter.input.addEventListener('focus', function(e) {
+        _this.els.counter.container.classList.add('is-input');
+      });
+
+      _this.els.counter.input.addEventListener('blur', function(e) {
+        _this.els.counter.container.classList.remove('is-input');
+        _this.render();
+      });
+    };
+  };
+
+  // init
+  var controls = new ctrls();
+  document.addEventListener('DOMContentLoaded', controls.ready);
+})();
+</script>
+</form>
+</body>
+<!--<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-46156385-1', 'cssscript.com');
+  ga('send', 'pageview');
+
+</script>-->
+</html>
